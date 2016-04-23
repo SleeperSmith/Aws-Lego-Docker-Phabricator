@@ -17,7 +17,7 @@ cd /home/local/phabricator/bin/
 ./config set mysql.user $DB_USERNAME
 ./config set mysql.pass $DB_PASSWORD
 ./config set mysql.host $DB_ENDPOINT
-./config set phabricator.base-uri "http://$PHAB_HOSTNAME/"
+./config set phabricator.base-uri "https://$PHAB_HOSTNAME/"
 ./storage upgrade -f
 
 ln -s /usr/lib/git-core/git-http-backend /home/local/phabricator/support/bin/git-http-backend
