@@ -1,28 +1,25 @@
 #!/bin/bash
 
 mkdir -p /home/local/storage/repos/
-mkdir -p /home/local/storage/ssl/
 REPO_DIR=/home/local/storage/repos/
 
 cd /home/local/phabricator/bin/
 ./config set phd.user daemon-user
-./config set phabricator.timezone Australia/Sydney
+./config set phabricator.timezone $PHAB_TIMEZONE
 ./config set diffusion.allow-http-auth true
 ./config set pygments.enabled true
 ./config set metamta.mail-adapter PhabricatorMailImplementationAmazonSESAdapter
-./config set metamta.default-address noreply@digitalent.link
-./config set amazon-ses.access-key AKIAJHWJG6VCUDAC2PVA
-./config set amazon-ses.secret-key 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
-./config set amazon-ses.endpoint email-smtp.us-east-1.amazonaws.com
+./config set metamta.default-address $MAIL_ADDRESS
+./config set amazon-ses.access-key $IAM_KEY
+./config set amazon-ses.secret-key $IAM_KEY
+./config set amazon-ses.endpoint email-smtp.$SES_REGION.amazonaws.com
 ./config set repository.default-local-path $REPO_DIR
-./config set mysql.user sqladmin
-./config set mysql.pass 3c148cb8-eb32-446a-a9cc-d5f55e0f22b1
-./config set mysql.host ddlfjdtt695nc8.clhkkwzee0bn.ap-southeast-2.rds.amazonaws.com
-./config set phabricator.base-uri "https://phabricator.digitalent.link/"
+./config set mysql.user $DB_USERNAME
+./config set mysql.pass $DB_PASSWORD
+./config set mysql.host $DB_ENDPOINT
+./config set phabricator.base-uri "http://$PHAB_HOSTNAME/"
 ./storage upgrade -f
 
-cd /home/local/storage/ssl/
-openssl req -nodes -x509 -newkey rsa:4096 -days 35600 -sha256 -keyout private.key -out certificate.crt -subj "/C=AU/ST=NSW/L=Sydney/O=BitClouded/CN=phabricator.digitalent.link"
 ln -s /usr/lib/git-core/git-http-backend /home/local/phabricator/support/bin/git-http-backend
 echo "www-data ALL=(daemon-user) SETENV: NOPASSWD: /usr/lib/git-core/git-http-backend, /usr/bin/hg" >> /etc/sudoers
 sed -i -e 's/;opcache.validate_timestamps=1/opcache.validate_timestamps=0/g' /etc/php5/fpm/php.ini
