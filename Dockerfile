@@ -4,7 +4,8 @@ ARG phabricator_hash=f75b1cf562c0c3646324864851d693ef1069a068
 ARG libphutil_hash=b8c65df2a910a7028d39bec602d181428b6ce01f
 ARG arcanist_hash=01b6fe8bb0239a4bce03f58d6288a3a52ad83a91
 
-RUN apt-get update -q && \
+RUN add-apt-repository ppa:git-core/ppa && \
+    apt-get update -q && \
     apt-get install -y -q unzip curl sudo && \
     apt-get install -y -q git mercurial subversion python-pygments dpkg-dev && \
     apt-get install -y -q php5 php5-mysql php5-gd php5-dev php5-curl php-apc php5-cli php5-json php5-fpm
