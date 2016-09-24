@@ -11,8 +11,8 @@ cd /home/local/phabricator/bin/
 ./config set metamta.mail-adapter PhabricatorMailImplementationAmazonSESAdapter
 ./config set metamta.default-address $MAIL_ADDRESS
 ./config set amazon-ses.access-key $IAM_KEY
-./config set amazon-ses.secret-key $IAM_KEY
-./config set amazon-ses.endpoint email-smtp.$SES_REGION.amazonaws.com
+./config set amazon-ses.secret-key $IAM_SECRET
+./config set amazon-ses.endpoint email.$SES_REGION.amazonaws.com
 ./config set repository.default-local-path $REPO_DIR
 ./config set mysql.user $DB_USERNAME
 ./config set mysql.pass $DB_PASSWORD
