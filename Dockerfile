@@ -1,8 +1,8 @@
 FROM nginx:1.8.1
 
-ARG phabricator_hash=f75b1cf562c0c3646324864851d693ef1069a068
-ARG libphutil_hash=b8c65df2a910a7028d39bec602d181428b6ce01f
-ARG arcanist_hash=01b6fe8bb0239a4bce03f58d6288a3a52ad83a91
+ARG phabricator_hash=27006fedccc2f487dcaf7177f6d127ccd0e6df7d
+ARG libphutil_hash=518dacd785fb19d67643e4a113e99b8825a87f99
+ARG arcanist_hash=e7906e47cba2006fa46553d462abf1f685845f20
 
 RUN apt-get update -q && \
     apt-get install -y -q unzip curl sudo && \
@@ -21,5 +21,6 @@ RUN curl -o arcanist.zip -J -L https://github.com/phacility/arcanist/archive/$ar
 
 ADD ./phabricator.conf /etc/nginx/conf.d/default.conf
 ADD ./init.sh ./
+ADD ./preamble.php /home/local/phabricator/support/
 
 CMD ["/home/local/init.sh"]

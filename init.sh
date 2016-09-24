@@ -23,6 +23,7 @@ cd /home/local/phabricator/bin/
 ln -s /usr/lib/git-core/git-http-backend /home/local/phabricator/support/bin/git-http-backend
 echo "www-data ALL=(daemon-user) SETENV: NOPASSWD: /usr/lib/git-core/git-http-backend, /usr/bin/hg" >> /etc/sudoers
 sed -i -e 's/;opcache.validate_timestamps=1/opcache.validate_timestamps=0/g' /etc/php5/fpm/php.ini
+sed -i -e 's/;always_populate_raw_post_data = -1/always_populate_raw_post_data = -1/g' /etc/php5/fpm/php.ini
 sed -i -e 's/post_max_size = 8M/post_max_size = 500M/g' /etc/php5/fpm/php.ini
 sed -i -e 's/listen = \/var\/run\/php5-fpm.sock/listen = localhost:9000/g' /etc/php5/fpm/pool.d/www.conf
 service php5-fpm restart
